@@ -1,0 +1,19 @@
+// TO DO LIST
+
+ After JWT show games button to coin quiest 
+
+ spin wheel remove from "/" // DONE
+
+ Spin wheel text =>
+
+ Spin the wheel to win up to 1,000 DMZT! // DONE
+
+ DreamGameZ // DONE
+
+ remove DMTZ and it will be blank // DONE
+
+ Bonus DMTZ => Bonus DMZT // DONE
+
+ All DMTZ => DMZT // DONE
+ 
+ dollar before // DONE

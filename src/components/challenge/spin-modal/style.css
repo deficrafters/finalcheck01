@@ -1,0 +1,71 @@
+.main-body {
+    /* background-image: url("./../../../assets/images/bg-image.png"); */
+    background-image: url('./../../../../public/assets/images/bg-image.png');
+    background-position: left;
+}
+
+.box-around {
+    background-image: url("./../../../../public/assets/images/wheel-background.svg");
+    transition: transform 5s ease-in-out;
+}
+
+.topbox {
+    background-image: url("./../../../../public/assets/images/fortune-wheel-selected-frame.svg");
+    background-size: 100% auto;
+    /* background-position: 50%; */
+}
+
+.box-1 {
+    transform: translateX(0) translateY(-250px);
+}
+
+.box-2 {
+    transform: translateX(177px) translateY(-177px) rotate(45deg);
+}
+
+.box-3 {
+    transform: translateX(250px) translateY(0) rotate(90deg);
+}
+
+.box-4 {
+    transform: translateX(177px) translateY(177px) rotate(135deg);
+}
+
+.box-5 {
+    transform: translateX(0) translateY(250px) rotate(180deg);
+}
+
+.box-6 {
+    transform: translateX(-177px) translateY(177px) rotate(225deg);
+}
+
+.box-7 {
+    transform: translateX(-250px) translateY(0) rotate(270deg);
+}
+
+.box-8 {
+    transform: translateX(-177px) translateY(-177px) rotate(315deg);
+}
+
+@keyframes spinning-wheel {
+
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(1turn);
+    }
+}
+
+.animate-data {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    border-radius: 50%;
+    background: conic-gradient(from 227.49deg at 50% 50%, transparent 0deg, rgba(2, 3, 1, 0) .04deg, rgba(2, 3, 1, 0) 85.13deg, #ebbe7d 1turn);
+    animation: spinning-wheel 5s linear infinite;
+}
