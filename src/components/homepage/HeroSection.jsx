@@ -2,6 +2,8 @@
 import { useContext } from "react";
 import Link from "next/link";
 import Lottie from "lottie-react";
+import { createThirdwebClient } from "thirdweb";
+import { ConnectButton } from "thirdweb/react";
 import HeroAnim from "../../../public/heroCharacter.json";
 import GlobalContext from "../context/global/GlobalContext";
 import toast from "react-hot-toast";
@@ -11,6 +13,10 @@ export default function HeroSection() {
   const { setOpenSub } = useContext(GlobalContext);
 
   const router = useRouter();
+
+   
+const client = createThirdwebClient({ clientId: "a24339e41559bc3eaf3bdb3842ea7a43" });
+ 
 
   const {
     isLogin,
@@ -88,6 +94,17 @@ export default function HeroSection() {
             <span className={``}>|</span>
             <span>limited pool</span>
           </h5>
+
+          <ConnectButton
+  client={client}
+  wallets={[
+    createWallet("io.metamask"),
+    createWallet("com.coinbase.wallet"),
+    createWallet("me.rainbow"),
+  ]}
+/>;
+
+
 
           <div>
             {typeof window !== "undefined" &&
