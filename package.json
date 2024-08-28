@@ -41,7 +41,7 @@
     "redux-thunk": "^3.1.0",
     "socket.io-client": "^4.7.5",
     "swiper": "^11.1.0",
-    "thirdweb": "^5.46.1",
+    "thirdweb": "^5.48.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
