@@ -47,7 +47,6 @@ const DepositModal = ({
   const [amount, setAmount] = useState("");
   const [userWallet, setUserWallet] = useState("");
 
-  // const { address, chainId } = useWeb3ModalAccount();
   const [loading, setLoading] = useState(false);
   const [balanceLoading, setBalanceLoading] = useState(false);
   const [rate, setRate] = useState("");

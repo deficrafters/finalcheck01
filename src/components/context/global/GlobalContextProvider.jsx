@@ -4,8 +4,6 @@ import { content } from "@/utils/content";
 import { useEffect, useState } from "react";
 import GlobalContext from "./GlobalContext";
 import { countdownTimer } from "@/utils/functions";
-import { useAutoConnect } from "thirdweb/react";
-import { ThirdWebClient, wallets } from "@/context/ThirdWeb";
 
 const { coinQuest, jackpotMadness, dreamzDual, dreamzThree } =
   content.gameDates;
@@ -29,10 +27,6 @@ export default function GlobalContextProvider({ children }) {
     disableOnInteraction: false,
   });
 
-  const { data: autoConnected } = useAutoConnect({
-    client: ThirdWebClient,
-    wallets,
-  });
   // --------------------------------------------------------
   // USE THESE STATES BELOW TO ACTIVATE OR DEACTIVATE THE GAMES OR ANY
   // BUTTON FUNCTIONALITY IN GAMES. THESE STATES ARE CONNECTED TO TIMERS

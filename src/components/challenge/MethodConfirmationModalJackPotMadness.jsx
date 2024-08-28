@@ -12,11 +12,8 @@ import Image from "next/image";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { DepositFn } from "../wallet1.0/deposit";
-// import { useSwitchNetwork, useWeb3ModalAccount } from "@web3modal/ethers/react";
 import { useRouter, useSearchParams } from "next/navigation";
-// import { useWeb3ModalState, useWalletInfo } from "@web3modal/react";
 import { balanceFn } from "../wallet1.0/deposit";
-import { chains } from "@/context/web3modal";
 
 const TicketModal = ({
   EntryPrice,
@@ -30,7 +27,6 @@ const TicketModal = ({
   counter,
 }) => {
   const dispatch = useDispatch();
-  const { chainId } = useWeb3ModalAccount();
 
   const router = useRouter();
 
@@ -53,7 +49,6 @@ const TicketModal = ({
     selectedToken: "",
   });
   const [oneBNBPrice, setOneBNBPrice] = useState(0);
-  const { address } = useWeb3ModalAccount();
   const [loading, setLoading] = useState(false);
   const [gameData, setGameData] = useState("");
   const [datasss, setDatasss] = useState({});
@@ -72,9 +67,6 @@ const TicketModal = ({
   const [One_BNB_Price, setOne_BNB_Price] = useState(574);
 
   const route = useSearchParams();
-
-  // const { switchNetwork } = useSwitchNetwork();
-  // const { selectedNetworkId } = useWeb3ModalState();
 
   const handleMouseDown = (e) => {
     setIsDragging(true);

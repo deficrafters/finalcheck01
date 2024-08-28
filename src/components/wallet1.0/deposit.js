@@ -8,11 +8,6 @@ import { fromGwei, toUnits } from "thirdweb/utils";
 
 import ETH_USDC from "../../utils/abi/Ethereum/Usdc.json";
 import ETH_USDT from "../../utils/abi/Ethereum/Usdt.json";
-import axios from "axios";
-import { getProvider } from "../connectWallet/Metamask";
-import { useContractRead } from "wagmi";
-import { fetchBalance } from "wagmi/actions";
-import { Provider } from "@/context/Modal";
 import {
   getContract,
   readContract,
@@ -27,6 +22,7 @@ import {
 } from "thirdweb/react";
 import { ThirdWebClient, wallets } from "@/context/ThirdWeb";
 import { getWalletBalance } from "thirdweb/wallets";
+import { logtail } from "@/utils/functions";
 // import ETH_BSC from "../../utils/abi/Ethereum/Bsc.json";
 
 export const getBalance = async ({ address, abi, wallet, chain }) => {
@@ -38,14 +34,18 @@ export const getBalance = async ({ address, abi, wallet, chain }) => {
         chain: getChainInfo(),
         abi,
       });
+      logtail.log(address, wallet);
       const data = await readContract({
         contract,
         method: "balanceOf",
         params: [wallet],
       });
+      logtail.log(`Balance ${address} - ${Number(data) / Math.pow(10, 18)}`);
       return Number(data) / Math.pow(10, 18);
     } catch (error) {
       toast.error(JSON.stringify(error));
+      logtail.error(error);
+
       console.log(error);
       return "";
     }
@@ -57,9 +57,18 @@ export const getBalance = async ({ address, abi, wallet, chain }) => {
 export const useDeposit = () => {
   const account = useActiveAccount();
   const wallet = useActiveWallet();
-  const deposit = async ({ abi, address, wallet, input, type, chain }) => {
+  const deposit = async ({
+    abi,
+    address,
+    wallet,
+    input,
+    type,
+    chain,
+    account,
+  }) => {
     try {
       console.log({ abi, address, wallet, input, type, chain });
+      logtail.log({ input, type, chain, account });
 
       const depositContractInfo = getDepositInfo();
 
@@ -102,6 +111,7 @@ export const useDeposit = () => {
       const balance = await getBalance({ abi, address, wallet, chain });
 
       if (balance?.error) {
+        logtail.error(balance);
         return {
           error: balance?.error?.reason
             ? balance?.error?.reason
@@ -172,6 +182,7 @@ export const useDeposit = () => {
             resolve(depositResult);
           } catch (error) {
             console.log(error);
+            logtail.error(error);
             reject({
               error: error?.reason
                 ? error?.reason
@@ -191,6 +202,7 @@ export const useDeposit = () => {
       });
     } catch (error) {
       console.log(error);
+      logtail.error(error);
       return {
         error: error?.reason
           ? error?.reason
@@ -208,6 +220,7 @@ export const useDeposit = () => {
       ...contractDetails,
       chain,
       ...obj,
+      account,
     });
   };
 

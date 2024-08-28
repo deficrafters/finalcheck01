@@ -14,4 +14,5 @@ export const wallets = [
   createWallet("io.metamask"),
   createWallet("com.coinbase.wallet"),
   createWallet("com.trustwallet.app"),
+  createWallet("walletConnect"),
 ];

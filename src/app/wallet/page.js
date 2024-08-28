@@ -27,45 +27,29 @@ import "swiper/css";
 import "swiper/css/grid";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Usdt from "../../utils/abi/Usdt.json";
-import Usdc from "../../utils/abi/Usdc.json";
-
-import {
-  // useWeb3ModalState,
-  // useWalletInfo,
-  Web3NetworkSwitch,
-} from "@web3modal/react";
 
 import BNB from "../../assets/cryptIcon/crypto-color_bnb.png";
 import USDT from "../../assets/cryptIcon/crypto-color_usdt.png";
 import USDC from "../../assets/cryptIcon/crypto-color_usdc.png";
 import axios from "axios";
-import { chains, hexValue } from "@/context/web3modal";
 import toast from "react-hot-toast";
 import { getData as gettingDatas } from "../../store/slices/popupSlice";
-import { networkSwitchFn } from "@/components/connectWallet/Metamask";
-import { useBalance, useContractRead, useAccount, sepolia } from "wagmi";
 import {
-  useActiveWalletChain,
   useNetworkSwitcherModal,
   useSwitchActiveWalletChain,
 } from "thirdweb/react";
-import { bsc, bscTestnet, ethereum } from "thirdweb/chains";
+import { bsc, bscTestnet, ethereum, sepolia } from "thirdweb/chains";
 import { ThirdWebClient } from "@/context/ThirdWeb";
+import { logtail } from "@/utils/functions";
 
 const Wallet = () => {
   const [getData, setGetData] = useState("");
-  // const { selectedNetworkId } = useWeb3ModalState();
   const [refetch, setRefetch] = useState("");
   const Get_Above_Cards_Data = useSelector((state) => state.popup.Data);
   const search = useSearchParams();
   const chainIndex = search.get("chain");
   const dispatch = useDispatch();
-  const { address } = useAccount();
   const router = useRouter();
-  const switchChain = useSwitchActiveWalletChain();
-  const activeChain = useActiveWalletChain();
-  const networkSwitcher = useNetworkSwitcherModal();
   const [selectedNetworkId, setSelectedNewtorkId] = useState(
     chainIndex === "1" ? bsc.id : ethereum.id
   );
@@ -466,7 +450,7 @@ const Wallet = () => {
                 key={item.key}
                 {...item}
                 refetch={refetch}
-                chain={chains[0]?.chainId}
+                // chain={chains[0]?.chainId}
                 btnGroup={
                   <>
                     <button
@@ -644,20 +628,28 @@ const ChainTabs = ({ children, handleTab, tab = 0 }) => {
     }
   }, [tab]);
 
-  const networkChange = (index) => {
-    toast.success(`${index},${currentChain}`);
+  const networkChange = async (index) => {
+    try {
+      toast.success(`${index},${currentChain}`);
 
-    setAnimate(true);
-    const chain = index === 1 ? bsc : ethereum;
+      setAnimate(true);
+      const chain = index === 1 ? bsc : ethereum;
 
-    switchChain(chain);
-    localStorage.setItem("chain", chain.id);
-    handleTab(chain.id);
-    router.push(`/wallet?chain=${index}`);
-    setTimeout(() => {
-      setActiveTab(index);
-      setAnimate(false);
-    }, 300);
+      await switchChain(chain);
+      localStorage.setItem("chain", chain.id);
+      handleTab(chain.id);
+      logtail.log(`Chain switched - ${chain.name}`);
+      toast.success(`Chain Switched - ${chain.id}`);
+      router.push(`/wallet?chain=${index}`);
+      setTimeout(() => {
+        setActiveTab(index);
+        setAnimate(false);
+      }, 300);
+    } catch (error) {
+      console.log(error);
+      logtail.error(error);
+      // toast.error(JSON.stringify(error));
+    }
 
     return;
     // try {

@@ -5,11 +5,10 @@ import BSC from "../../utils/abi/Bsc.json";
 import toast from "react-hot-toast";
 import { useSelector, useDispatch } from "react-redux";
 import { setDepositHash } from "@/store/slices/popupSlice";
-import { getProvider } from "../connectWallet/Metamask";
 
 const getBalance = async ({ address, abi, wallet }) => {
   if (typeof window.ethereum !== undefined) {
-    const providers = getProvider();
+    const providers = "";
     const signer = await providers.getSigner();
     const contract = new ethers.Contract(address, abi, signer);
     try {

@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { BiLinkExternal } from "react-icons/bi";
-// import { useDisconnect, useWeb3Modal, } from '@web3modal/ethers/react'
-// import { useWalletInfo } from '@web3modal/ethers/react'
-// import { useWeb3ModalAccount } from '@web3modal/ethers/react'
 import axios from "axios";
 import toast from "react-hot-toast";
 
 const ExternalAddress = ({ addresss, Connected, getWalletDtaa }) => {
-  //   const { open } = useWeb3Modal();
-
   const [isLoadingMetamask, setisLoadingMetamask] = useState(false);
 
-  //   const { address, chainId, isConnected } = useWeb3ModalAccount();
   const address = "";
 
   const connectWallet = async () => {

@@ -11,7 +11,8 @@ import LoginButton from "../common/LoginButton";
 import RegisterButton from "../common/RegisterButton";
 import { FaBars } from "react-icons/fa6";
 import GlobalContext from "../context/global/GlobalContext.js";
-
+import { useAutoConnect } from "thirdweb/react";
+import { ThirdWebClient } from "@/context/ThirdWeb.js";
 
 const {
   homeMenu,
@@ -95,8 +96,24 @@ export default function Header() {
   };
 
   useEffect(() => {
-    document.body.style.overflow = (loginOpen || hamOpen || dreamzDualPopup || numberCardPopup || jackpotPopup) ? "hidden" : "auto";
-  }, [hamOpen, loginOpen, dreamzDualPopup, numberCardPopup, jackpotPopup])
+    document.body.style.overflow =
+      loginOpen || hamOpen || dreamzDualPopup || numberCardPopup || jackpotPopup
+        ? "hidden"
+        : "auto";
+  }, [hamOpen, loginOpen, dreamzDualPopup, numberCardPopup, jackpotPopup]);
+
+  const {
+    data,
+    refetch: autoConnect,
+    isLoading,
+  } = useAutoConnect({
+    client: ThirdWebClient,
+    onConnect: (wallet) => {
+      console.log(wallet, "Auto connected");
+    },
+  });
+
+  console.log({ autoConnected: data, isLoading });
 
   return (
     <header
@@ -113,12 +130,12 @@ export default function Header() {
           >
             <Image
               src={"/Logo.png"}
-              alt=""
+              alt=''
               width={95}
               height={0}
               className={`w-[90px] h-auto`}
             />
-            <h1 className="text-[--brandColor] text-center text-sm">
+            <h1 className='text-[--brandColor] text-center text-sm'>
               DreamGameZ
             </h1>
           </Link>
@@ -168,7 +185,7 @@ export default function Header() {
             </div>
           )}
           <button onClick={handleHam} className={`block lg:hidden ml-3`}>
-            <FaBars color="#fff" />
+            <FaBars color='#fff' />
           </button>
         </div>
       </div>

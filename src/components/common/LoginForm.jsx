@@ -9,25 +9,13 @@ import GlobalContext from "../context/global/GlobalContext";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-// import { useDisconnect } from "@web3modal/ethers/react";
-// import { useWalletInfo } from "@web3modal/ethers/react";
-// import { useWeb3ModalAccount } from "@web3modal/ethers/react";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
-import {
-  connectCoinbaseWallet,
-  connectMetaMask,
-  connectTrustWallet,
-  WalletConnect,
-} from "../connectWallet";
 import { useDispatch } from "react-redux";
-import { useWeb3Modal } from "@web3modal/react";
-import { useAccount } from "wagmi";
 import { ThirdWebClient, wallets } from "@/context/ThirdWeb";
-import { createWallet } from "thirdweb/wallets";
-import { chains, hexValue } from "@/context/web3modal";
-import { useAutoConnect } from "thirdweb/react";
+import { useSetActiveWallet } from "thirdweb/react";
 import { bsc, bscTestnet, ethereum, sepolia } from "thirdweb/chains";
+import { logtail } from "@/utils/functions";
 const trustWallet = "/trust-wallet.png";
 
 export default function LoginForm() {
@@ -37,13 +25,8 @@ export default function LoginForm() {
     keepSignedIn: false,
   };
   const { connect, isConnecting } = useConnectModal();
+  const setActiveAccount = useSetActiveWallet();
 
-  const { data: autoConnected } = useAutoConnect({
-    client: ThirdWebClient,
-    wallets,
-    timeout: 1000,
-  });
-  console.log({ autoConnected });
   const [formData, setFormData] = useState(initialState);
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -81,19 +64,8 @@ export default function LoginForm() {
 
   const router = useRouter();
 
-  const { open: openTrustModal } = useWeb3Modal();
   const ref = useRef(null);
 
-  // const { disconnect } = useDisconnect();
-
-  // const {
-  //   address: connectWalletAddress,
-  //   chainId,
-  //   isConnected,
-  // } = useWeb3ModalAccount();
-
-  const { address: trustAddress } = useAccount();
-  console.log({ trustAddress });
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -389,10 +361,6 @@ export default function LoginForm() {
   //   if (isConnected) setAddress(connectWalletAddress);
   // }, [isConnected])
 
-  useEffect(() => {
-    if (trustAddress) setAddress(trustAddress);
-  }, [trustAddress]);
-
   setTimeout(() => {
     if (searchshowRegister) {
       setopenRegister(true);
@@ -403,8 +371,6 @@ export default function LoginForm() {
       setshowRegister(false);
     }
   }, 100);
-
-  // const { open } = useWeb3Modal();
 
   const isFirstRun = useRef(true);
 
@@ -571,8 +537,11 @@ export default function LoginForm() {
       chain: ethereum,
     });
     const account = wallet.getAccount();
+
     localStorage.setItem("chain", ethereum.id);
-    console.log("connected to", account);
+    // const test = await setActiveAccount(wallet);
+    // console.log("connected to", account, test);
+    logtail.log(`Wallet Connected - ${account.address}`);
     setAddress(account?.address);
     setisLoadingMetamask(true);
     setisNowLoading(true);
@@ -920,7 +889,7 @@ export default function LoginForm() {
                       src='/MetaMask.png'
                       alt='MetaMask Logo'
                     />
-                    {/* <img
+                    <img
                       className='hover:w-[85px] hover:h-[85px]'
                       onClick={() => connectWallet("Wallet Connect")}
                       style={{
@@ -937,7 +906,7 @@ export default function LoginForm() {
                       }}
                       src='/walletconnect.svg'
                       alt='MetaMask Logo'
-                    /> */}
+                    />
                     <img
                       className='hover:w-[85px] hover:h-[85px]'
                       onClick={() => connectWallet("Trust")}

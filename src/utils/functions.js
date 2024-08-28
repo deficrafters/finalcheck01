@@ -1,3 +1,5 @@
+import { Browser as Logtail } from "@logtail/js";
+
 export const countdownTimer = (date, setState, setTimeRemaining) => {
   const targetDate = new Date(date);
   const interval = setInterval(() => {
@@ -32,3 +34,5 @@ export const countdownTimer = (date, setState, setTimeRemaining) => {
 
 export const formatWalletAddress = (address) =>
   address?.substring(0, 5) + "...." + address?.substring(address.length - 5);
+
+export const logtail = new Logtail("FuAaYszqjwN1QXeRt8sDGp3a");

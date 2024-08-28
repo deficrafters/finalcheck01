@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { balanceFn } from "./deposit";
-// import { useWeb3ModalAccount } from "@web3modal/ethers/react";
 import { useSelector } from "react-redux";
 import { useActiveWalletChain } from "thirdweb/react";
 import { LoadingOutlined } from "@ant-design/icons";

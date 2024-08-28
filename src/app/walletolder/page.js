@@ -15,8 +15,6 @@ import { setWalletPopup } from "@/store/slices/popupSlice";
 import { useDispatch } from "react-redux";
 import { Tab, Tabs } from "@/components/common/Tabs";
 import { useRouter } from "next/navigation";
-// import { useWeb3ModalState, useWalletInfo, useSwitchNetwork } from "@web3modal/ethers/react";
-// import {info} from "../../utils/EthToDollar"
 
 // icons
 
@@ -28,7 +26,6 @@ import axios from "axios";
 
 const Wallet = () => {
   const [getData, setGetData] = useState("");
-  const { selectedNetworkId } = useWeb3ModalState();
   const dispatch = useDispatch();
 
   const router = useRouter();
@@ -135,14 +132,13 @@ const Wallet = () => {
   }, []);
 
   const handleTab = (index) => {
-    if (index === 1 && selectedNetworkId !== 97) {
-      //  console.log("came in 97")
-      switchNetwork(97);
-    } else if (index === 0 && selectedNetworkId !== 1) {
-      //  console.log("came in 1")
-      switchNetwork(1);
-    }
-
+    // if (index === 1 && selectedNetworkId !== 97) {
+    //   //  console.log("came in 97")
+    //   switchNetwork(97);
+    // } else if (index === 0 && selectedNetworkId !== 1) {
+    //   //  console.log("came in 1")
+    //   switchNetwork(1);
+    // }
     //  console.log(tabs[index]);
     //  console.log(selectedNetworkId);
   };

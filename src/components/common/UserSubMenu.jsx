@@ -4,7 +4,6 @@ import Link from "next/link";
 import { content } from "@/utils/content";
 import GlobalContext from "@/components/context/global/GlobalContext";
 import { useRouter } from "next/navigation";
-// import { useDisconnect } from "@web3modal/wagmi/react";
 
 const { userSubMenuItems } = content.menus;
 
