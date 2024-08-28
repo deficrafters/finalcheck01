@@ -4,6 +4,7 @@ import Link from "next/link";
 import Lottie from "lottie-react";
 import { createThirdwebClient } from "thirdweb";
 import { ConnectButton } from "thirdweb/react";
+import { createWallet } from "thirdweb/wallets";
 import HeroAnim from "../../../public/heroCharacter.json";
 import GlobalContext from "../context/global/GlobalContext";
 import toast from "react-hot-toast";
