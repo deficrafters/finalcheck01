@@ -37,6 +37,7 @@ import { getData as gettingDatas } from "../../store/slices/popupSlice";
 import {
   useNetworkSwitcherModal,
   useSwitchActiveWalletChain,
+  
 } from "thirdweb/react";
 import { bsc, bscTestnet, ethereum, sepolia } from "thirdweb/chains";
 import { ThirdWebClient } from "@/context/ThirdWeb";
@@ -53,6 +54,11 @@ const Wallet = () => {
   const [selectedNetworkId, setSelectedNewtorkId] = useState(
     chainIndex === "1" ? bsc.id : ethereum.id
   );
+
+
+  const switchChaincode = useSwitchActiveWalletChain();
+
+  
 
   const [data, setData] = useState([
     {
@@ -435,6 +441,12 @@ const Wallet = () => {
           </SwiperSlide>
         </Swiper>
       </div>
+     
+      <button onClick={() => switchChaincode(bsc )}>bsc network Chain</button>
+      <br/>
+      <button onClick={() => switchChaincode(ethereum)}>ethereum network Chain</button>
+
+    
 
       <div className='mt-5'>
         <ChainTabs handleTab={handleTab} tab={chainIndex}>
